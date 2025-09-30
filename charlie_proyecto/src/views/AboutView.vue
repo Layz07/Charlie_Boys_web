@@ -1,5 +1,6 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h1>Sobre Nosotros</h1>
+    <p>Conoce la historia, misión y visión de Charlie Boys.</p>
   </div>
 </template>
