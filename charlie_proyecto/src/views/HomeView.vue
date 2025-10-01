@@ -101,7 +101,17 @@
           <p v-if="subscribed" class="success">¡Gracias! Te escribiremos en breve.</p>
         </div>
         <div class="contact-art">
-          <div class="map-sim">Mapa / dirección (placeholder)</div>
+          <div class="map-sim">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.6898268079444!2d-89.2712315!3d13.676615100000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f632e4c10ffa58d%3A0x58d9c8dddf7f62b9!2sCharlie%20Boy%20Pizza%20%26%20Grill%20%E2%80%A2%20Santa%20Tecla!5e0!3m2!1ses-419!2ssv!4v1759286498130!5m2!1ses-419!2ssv"
+    width="100%"
+    height="100%"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
         </div>
       </div>
     </section>
@@ -208,6 +218,18 @@ export default {
   border-radius: 2px;
   background: var(--accent);
   box-shadow: 0 0 8px rgba(255,90,95,0.4);
+}
+
+.map-sim {
+  width: 100%;
+  height: 100%;
+  min-height: 200px; 
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.contact-art .map-sim {
+  height: 240px; /* o la altura que quieras */
 }
 
 .special {

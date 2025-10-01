@@ -2,17 +2,19 @@
   <div id="app">
     <Navbar />
     <router-view />
-    <footer class="footer">
-      <p>© 2025 Charlie Boys - Todos los derechos reservados</p>
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 
 export default {
-  components: { Navbar }
+  components: {
+    Navbar,
+    Footer
+  }
 }
 </script>
 
@@ -41,12 +43,4 @@ body {
   flex-direction: column;
 }
 
-.footer {
-  background: linear-gradient(90deg, #ff5a5f, #ff7a59);
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
-  font-size: 0.9rem;
-}
 </style>
