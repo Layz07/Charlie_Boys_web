@@ -103,12 +103,13 @@ const activeCategory = ref('all');
 
 // Productos de ejemplo
 const products = [
-  { id: 1, name: 'Hamburguesa Clásica', price: 5.99, category: 'fastfood', image: 'https://via.placeholder.com/300x200?text=Hamburguesa' },
-  { id: 2, name: 'Pizza Margherita', price: 8.99, category: 'pizza', image: 'https://via.placeholder.com/300x200?text=Pizza' },
-  { id: 3, name: 'Coca-Cola', price: 1.99, category: 'drinks', image: 'https://via.placeholder.com/300x200?text=Bebida' },
-  { id: 4, name: 'Brownie con helado', price: 4.50, category: 'desserts', image: 'https://via.placeholder.com/300x200?text=Postre' },
-  { id: 5, name: 'Combo Familiar', price: 15.99, category: 'fastfood', image: 'https://via.placeholder.com/300x200?text=Combo' },
-  { id: 6, name: 'Sushi Variado', price: 12.50, category: 'fastfood', image: 'https://via.placeholder.com/300x200?text=Sushi' }
+  { id: 1, name: 'Hamburguesa Mushroom Alfredo Parmesano', price: 6.95, category: 'fastfood', image: 'https://libritasdemas.com/wp-content/uploads/2018/02/16-1.jpg' },
+  { id: 2, name: 'Pizza Clasica', price: 12.99, category: 'pizza', image: 'https://media.discordapp.net/attachments/1090880697134219324/1432745312228999330/image.png?ex=69022b8d&is=6900da0d&hm=137face592363ddefe1dbd1fd77f9035199f80a170410a7a0094405205cfab55&=&format=webp&quality=lossless' },
+  { id: 3, name: 'Coca-Cola', price: 1.99, category: 'drinks', image: 'https://media.chevronextramile.com/uploads/2021/04/26095210/Coke_20oz-800x800.jpg' },
+  { id: 4, name: 'Empanaditas de Nutella', price: 3.75, category: 'desserts', image: 'https://libritasdemas.com/wp-content/uploads/2018/02/18.jpg' },
+  { id: 5, name: 'Bolitas de camaron y queso.', price: 2.99, category: 'fastfood', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTyc7pZoY2XEJn8Wo_-a2q9JjyDcLVKu1kTA&s' },
+  { id: 6, name: 'Hot dog', price: 4.50, category: 'fastfood', image: 'https://cdn.discordapp.com/attachments/1359932476138455364/1432744697243111557/Hotdog.png?ex=69022afa&is=6900d97a&hm=b4b021c5be25cbaa17a89a1e3302b8284a9b6af3e218693ca97e4025d42a63e2&' },
+  { id: 7, name: 'Pizza Personal', price: 5.99, category: 'pizza', image: 'https://media.discordapp.net/attachments/1090880697134219324/1432746394032013383/image.png?ex=69022c8f&is=6900db0f&hm=0bd2d3f22c0993fbf3c590dcd8c049e9112e02bda871d86308fdaf15c1966caa&=&format=webp&quality=lossless' }
 ];
 
 // Filtrar productos por categoría
@@ -193,6 +194,8 @@ const placeOrder = () => {
   padding: 20px;
 }
 
+
+
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -270,7 +273,7 @@ const placeOrder = () => {
 
 .menu-item img {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
