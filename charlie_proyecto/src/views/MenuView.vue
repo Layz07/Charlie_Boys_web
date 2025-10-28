@@ -10,13 +10,11 @@
           <span class="ornament-line"></span>
           <span class="ornament-dot"></span>
         </div>
-        
         <!-- Botón del carrito -->
         <button class="cart-btn" @click="toggleCart">
           🛒 Carrito ({{ cart.length }})
         </button>
       </div>
-      
       <div class="category-tabs">
         <button
           v-for="cat in categories"
@@ -28,6 +26,8 @@
           <span class="tab-label">{{ cat.label }}</span>
         </button>
       </div>
+
+      <!-- PIZZAS -->
       <section v-show="activeCategory === 'pizzas'" class="menu-section">
         <div class="section-header">
           <div class="section-title-wrapper">
@@ -74,8 +74,6 @@
                   <span class="price highlight">${{ pizza.priceG.toFixed(2) }}</span>
                 </div>
               </div>
-              
-              <!-- Botones de agregar al carrito -->
               <div class="add-to-cart-buttons">
                 <button @click="addToCart({ ...pizza, size: 'Personal', price: pizza.priceP })" class="add-btn">
                   Agregar Personal +
@@ -84,11 +82,12 @@
                   Agregar Grande +
                 </button>
               </div>
-              
             </div>
           </div>
-          </div>
+        </div>
       </section>
+
+      <!-- HAMBURGUESAS -->
       <section v-show="activeCategory === 'hamburguesas'" class="menu-section">
         <div class="section-header">
           <div class="section-title-wrapper">
@@ -135,8 +134,6 @@
                   <span class="price highlight">${{ burger.priceG.toFixed(2) }}</span>
                 </div>
               </div>
-              
-              <!-- Botones de agregar al carrito -->
               <div class="add-to-cart-buttons">
                 <button @click="addToCart({ ...burger, size: '1 Carne', price: burger.priceP })" class="add-btn">
                   Agregar 1 Carne +
@@ -145,11 +142,12 @@
                   Agregar Doble +
                 </button>
               </div>
-              
             </div>
           </div>
-          </div>
+        </div>
       </section>
+
+      <!-- BEBIDAS -->
       <section v-show="activeCategory === 'bebidas'" class="menu-section">
         <div class="section-header">
           <div class="section-title-wrapper">
@@ -157,92 +155,93 @@
             <h2 class="section-title">Bebidas</h2>
           </div>
         </div>
-        <div class="drinks-grid">
-          <div v-for="bebida in bebidas" :key="bebida.id" class="drink-item" :class="{ featured: bebida.featured }">
-            <img v-if="bebida.image" :src="bebida.image" class="drink-icon-img" :alt="bebida.name" />
-            <div v-else class="drink-icon">{{ bebida.icon }}</div>
-            <div class="drink-info">
-              <h3 class="drink-name">{{ bebida.name }}</h3>
-              <p v-if="bebida.desc" class="drink-description">{{ bebida.desc }}</p>
+        <div class="shakes-grid">
+          <div v-for="bebida in bebidas" :key="bebida.id" class="shake-card" :class="{ featured: bebida.featured }">
+            <div class="shake-header">
+              <img v-if="bebida.image" :src="bebida.image" class="drink-card-image" :alt="bebida.name" />
+              <span v-else class="shake-icon">{{ bebida.icon }}</span>
+              <h3 class="shake-name">{{ bebida.name }}</h3>
+              <p v-if="bebida.desc" class="shake-desc">{{ bebida.desc }}</p>
             </div>
-            <div class="drink-price">${{ bebida.price.toFixed(2) }}</div>
-            
-            <!-- Botón de agregar al carrito -->
-            <button @click="addToCart({ ...bebida, size: '', price: bebida.price })" class="add-btn">
-              Agregar +
-            </button>
-            
+            <div class="shake-footer">
+              <span class="shake-price">${{ bebida.price.toFixed(2) }}</span>
+              <button @click="addToCart({ ...bebida, size: '', price: bebida.price })" class="add-btn">
+                Agregar +
+              </button>
+            </div>
           </div>
         </div>
       </section>
-<section v-show="activeCategory === 'shakes'" class="menu-section">
+
+      <!-- SHAKES (CORREGIDO) -->
+      <section v-show="activeCategory === 'shakes'" class="menu-section">
+        <div class="section-header">
+          <div class="section-title-wrapper">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Shakes</h2>
+          </div>
+        </div>
+        <div class="shakes-grid">
+          <div
+            v-for="shake in shakes"
+            :key="shake.id"
+            class="shake-card"
+            :class="{ premium: shake.premium, tropical: shake.tropical, fresh: shake.fresh }"
+          >
+            <div v-if="shake.badge" :class="['shake-badge', shake.badgeClass]">
+              {{ shake.badge }}
+            </div>
+            <div class="shake-header">
+              <!-- ✅ Clase corregida a drink-card-image -->
+              <img v-if="shake.image" :src="shake.image" class="drink-card-image" :alt="shake.name" />
+              <span v-else class="shake-icon">{{ shake.icon }}</span>
+              <h3 class="shake-name">{{ shake.name }}</h3>
+              <p v-if="shake.desc" class="shake-desc">{{ shake.desc }}</p>
+            </div>
+            <div class="shake-footer">
+              <span class="shake-price">${{ shake.price.toFixed(2) }}</span>
+              <button @click="addToCart({ ...shake, size: '', price: shake.price })" class="add-btn">
+                Agregar +
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOT DOGS -->
+      <section v-show="activeCategory === 'hotdogs'" class="menu-section">
   <div class="section-header">
     <div class="section-title-wrapper">
-      <span class="section-number">04</span>
-      <h2 class="section-title">Shakes</h2>
+      <span class="section-number">05</span>
+      <h2 class="section-title">Hot Dogs</h2>
     </div>
   </div>
   <div class="shakes-grid">
-    <div
-      v-for="shake in shakes"
-      :key="shake.id"
-      class="shake-card"
-      :class="{ premium: shake.premium, tropical: shake.tropical, fresh: shake.fresh }"
-    >
-      <div v-if="shake.badge" :class="['shake-badge', shake.badgeClass]">
-        {{ shake.badge }}
-      </div>
+    <div v-for="hotdog in hotdogs" :key="hotdog.id" class="shake-card">
       <div class="shake-header">
-        <img v-if="shake.image" :src="shake.image" class="shake-image" :alt="shake.name" />
-        <span v-else class="shake-icon">{{ shake.icon }}</span>
-        <h3 class="shake-name">{{ shake.name }}</h3>
-        <p v-if="shake.desc" class="shake-desc">{{ shake.desc }}</p>
+        <!-- ✅ Clase corregida a drink-card-image -->
+        <img v-if="hotdog.image" :src="hotdog.image" class="drink-card-image" :alt="hotdog.name" />
+        <div v-else class="shake-icon">{{ hotdog.icon }}</div>
+        <h3 class="shake-name">{{ hotdog.name }}</h3>
+        <p v-if="hotdog.desc" class="shake-desc">{{ hotdog.desc }}</p>
       </div>
-      <!-- Nuevo contenedor para precio y botón -->
       <div class="shake-footer">
-        <span class="shake-price">${{ shake.price.toFixed(2) }}</span>
-        <!-- Botón de agregar al carrito -->
-        <button @click="addToCart({ ...shake, size: '', price: shake.price })" class="add-btn">
+        <span class="shake-price">${{ hotdog.price.toFixed(2) }}</span>
+        <button @click="addToCart({ ...hotdog, size: '', price: hotdog.price })" class="add-btn">
           Agregar +
         </button>
       </div>
     </div>
   </div>
 </section>
-      <section v-show="activeCategory === 'hotdogs'" class="menu-section">
-        <div class="section-header">
-          <div class="section-title-wrapper">
-            <span class="section-number">05</span>
-            <h2 class="section-title">Hot Dogs</h2>
-          </div>
-        </div>
-        <div class="hotdogs-grid">
-          <div v-for="hotdog in hotdogs" :key="hotdog.id" class="hotdog-item">
-            <img v-if="hotdog.image" :src="hotdog.image" class="hotdog-icon-img" :alt="hotdog.name" />
-            <div v-else class="hotdog-icon">{{ hotdog.icon }}</div>
-            <div class="hotdog-info">
-              <h3 class="hotdog-name">{{ hotdog.name }}</h3>
-              <p v-if="hotdog.desc" class="hotdog-description">{{ hotdog.desc }}</p>
-            </div>
-            <div class="hotdog-price">${{ hotdog.price.toFixed(2) }}</div>
-            
-            <!-- Botón de agregar al carrito -->
-            <button @click="addToCart({ ...hotdog, size: '', price: hotdog.price })" class="add-btn">
-              Agregar +
-            </button>
-            
-          </div>
-        </div>
-      </section>
     </div>
-    
+
     <!-- Carrito lateral -->
     <aside class="cart-sidebar" :class="{ open: cartOpen }">
       <div class="cart-header">
         <h2>🛒 Tu Pedido</h2>
         <button @click="toggleCart" class="close-btn">✕</button>
       </div>
-
       <div class="cart-items">
         <div v-for="item in cart" :key="item.id" class="cart-item">
           <div class="item-details">
@@ -258,18 +257,14 @@
             <button @click="removeFromCart(item.id)" class="remove-btn">✕</button>
           </div>
         </div>
-
         <div v-if="cart.length > 0" class="cart-actions">
           <button @click="clearCart" class="clear-btn">🗑️ Vaciar Carrito</button>
         </div>
-
         <p v-if="cart.length === 0">Tu carrito está vacío</p>
       </div>
-
       <div class="cart-total">
         <strong>Total: ${{ total.toFixed(2) }}</strong>
       </div>
-
       <form @submit.prevent="placeOrder" class="delivery-form">
         <h3>📝 Datos de Entrega</h3>
         <input type="text" placeholder="Nombre completo" v-model="order.name" required />
@@ -281,6 +276,7 @@
     </aside>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -316,7 +312,7 @@ export default {
           badge: "Popular",
           badgeClass: "popular",
           featured: true,
-          image: "https://lh3.googleusercontent.com/rd-gg-dl/ABS2GSmQBdooieOs8SO3hVSXOdsGxhu1undHX5SayFiyskBj2PXODl9jWVhZjPjKTUHb9IuFWTeJjebJLw9k8V7dNV1Z_FlPj8Z66Q859ATHNWxoB2685_znXzGizOsWu67Z2q1T5iwY9biRIoh1EPwyTjrovo9WrgqTFagtE0aAS69fLyNaQ--LX_TFYlpLUenqYFeOrwVxSHhjSseV8SJ3FoQdv5xecCalcD2ksgxBSB4PIuhNSZi-5EvJetosy92LIpe5_99RZl_FZeA-KjE8OowhIdwS1ckxbDfh0VcD8OSqd2epz_qbXuf2tLjxMzHGeOzKqMEQJZa9VLsYry2xlph7GEuEplkl_09-PjvkVYPyEdeaoP90omJpePhTM8Z4v1jbFMa5c34c17t8SrVgidkQRvS-qQJjs4xb4Gn5Ebbzgtd5KjrRzzO-5PkkaitgTm_jWvxszc0LotyP2k2a46j40iScUUK5Yry1ryizCAQgtzOXZthgr3U_LAIQeWEo7JdD-yGLQoZ5KGNG5w8dTq9xi2bY_h26nRj3QxkbCuxUDMNl6XT_7VPDbgImCXyhCNjLo_biDTSTvsAvSmm-lAxf_x1lspAzd-hk-PpsjvgFVQBcBbQeC4u3Z_CbeQDqwvExCPpBu_-2ATpB3nHV3Sk5VOVuwefYbBja8l1P-9Qr_Ow9yrLd4E8EOlBpzhiVS3VXQtQkcQj2arRSkfI6O6PhCD0qY-f89y1LLn9UymZUYhd3W1i6gQDM8bxmwdCXphcQxiNtwvLixdH-kJiszBySCHQWPzc2HPZTifW6QeAFge7cqra4U-0agrPNujPZXG_6kBla5Kp6uT5sFuTt3T2j_zMX4c5nlKgiEPPtUSoJcVd1joWsMInhAX-eFliqbXtx-b6srfLjDxFvwwpvCtUrahKNf5LL4xmlHv8I0Juq0eV2v4CmE1Ogo9hZBjNDlSzWQ6gipLfGPLlip7eVjnw4925s8z-6aOfr0h8KwMsrC5u83Al4GWsvwDj8SOkisXMoQ3MRdXnk-kFGxWNfVfpPlFoFgkFp4zxmnMLlDYioC8BeHxOzWBnHct2tO_mYOFzsv5g6oWgnapnu0nLiaTbWnEEDMp8hCjL2np0XSNkK52qSIB-wgV1mh9NLM9bUNuy8vITn20drlzq7vjZ2ctjCLfUqkDrPU9I0kQYmolRXR2rp_lPhLea8qDfNncuFV7JN9JN_WWs969USerA5dQNV_A83V7j9NfSApZxjcUHL8wREyezQeGHc_fwDRiQj_c0Umx3ZB8c=s1024-rj",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432792562086969474/AIJ2gl-v5a-cKI302jIeg8pcImqbDXgUWHT9ZZZ0MAqoWhn-HHl7ItaKTC3qYW6Oimqi3oTG0VJdE4oU37LTKQn2zzf96aQgQOMF6tVrSSxmrXVNyIO2pIe9PNab6u9y0mWyooi4-igHig1jkAOLWxmlPKwuvAvHGVIE8LyGdR74qFeZNtcC49PyNdQpnybrXaUItAbm2NW7z2flikiRbEpOyqmnCj6Mbb1e16j0FtxYfYOoKrJhLotyf-eQ0zU6Oq2DhcUZeE6pP6ejk-gClNj0Ress0lVavIb2u87TRJRj4WpnBy4f7EBCCp2YBqb3xJtFG82BZvdQDskq6Td5ScxWojCJs1024-rj.png?ex=6902578e&is=6901060e&hm=041c2569cb51859ff8995580fde9540987d79deb1051bb74a2efc7e1f3773932&=&format=webp&quality=lossless&width=960&height=960",
         },
         {
           id: 3,
@@ -326,7 +322,7 @@ export default {
           priceG: 11.95,
           badge: "Picante 🌶️",
           badgeClass: "spicy",
-          image: "https://lh3.googleusercontent.com/rd-gg-dl/ABS2GSmM315yj8Q8hdZusDWXldLltlpWFRfARvaeO_mtFvxC5Bpr4WVI9yahQ9tiJcO1-rHK6QgHlZPoLS0ega6YkEPD_7vQ5G2eDRItRJWYAdj-A6FHxT13Q8Gr-B4C8bqVvVgI1htYPPylV460FAo_4zt4iO7tdWfgmeGg1KuzHlC6LMyxPptTwDSnDwuBpHESiOaEG-Edb6XWyILRXRFYUf-hiiKG6YwEw5kuLg5_4uqWRD7IHL_YUoXAPgZabF9gTx7dKSn4zxwMTqdt8cxakfoC98itQMfYex84CCtcqKbs0PDngH4T8YmWuZeUnse-B1lgcADABQCcbh0ByY8x7Vsob_XB5tl_RT6pwFxV_yfkiFglM85DsNcAm0FHu7ZBjJ6nDa2WJLLYqgrBsjTu8yLsFmLGysPNk2MjEjfJnncuf19LcS577P2h0h6VSdTweEVEkD161YPNRFBPvq8MmfcAfKAa4x9dgUduKHPdS8g3Ihf3T7LHVNSdbweeV4Fup7v1uatsGwV7qIxjQqNhgc8tHaj4WZmM6-d40hN9xDUiQrrhq6u_sz3m-PMEiCzRQYED53gyRm4O5pzjDVMvP6XcbmA29oLPgbjJpZKpGzXTHPcsJRiRWLbMZe7FdvZnC_eEOmseiZnQa1XHHecOzdBrHst27yD_FScek3HKErFuIUBS7JqCGEOlcQ3WKaOOCima7sKGdC5VORI9Na7ByvOdeTv6MErH60KRrET7So6kDbaqfG6J2hLDeVqCu0Jb32fssjGC3T3xxm8ARsOUc2rodHr4stdpoMHx6e4yPsYOxTufWNLZlQ184L3Qxa4RTaQAHBb7OmASP-KvyYSmR13X7XcpE7Snmaj3Nrw4yG5xnOW2UQvbSfB7Nh5PXnGaVa1gijWB-xcGfnul7NWF8C6P_U5htvzzQxJ8O3Ow7unyu5JE23_D5X_lbvEvPi0_qASwmyjXLOCtTCfOuclijzKcmpiwiKDV-VLTa-r99l6Jw0TOaJJsT88wcMfo7LET94GqJ-gZ6LW-OF57t-Fb6Ya-b7_0v3UbaN3H8KXGo7LK8Ed7hKUMBolHsWqnZP0McdvdfpKGRSlVP-apcw1nRWn32lEatJzsYSWK_gOU7dQLa-BWrx1g2Y_V5cL0G9_PrAo517kHDBfXxgVTysD3tqviwz8hSKK6wljKa3uMySKqIIP7ioqU8XY6XYlGVmud5Nh6eK4tGYatXqd5DWtumur2-osQ85y8a7Ku0TleyzXicfGQWDWD6ArZauc2gXKyJ7lED0XDlDE=s1024-rj",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432792767230120136/AIJ2gl-iFuPdJDRp01Bed4EMiUzoLR9YS9Pn_u_ndEpM65g69PjRTcjIl0O3sMgWb6hyFWljvOjxoWU7s-NdmcGX2k2TzU5wRLMZDPXf2rBs02fZI_m5eksvzN32_XKNMxTOccsAvLnl6s62KPWe5Nk4yWtn_N4EIYtnebxco8ZNyhsPtmkGuc1t6Dv3PzCuffgyI6fRhRTjZg_MdNsCNRvlQlHqU2zzxDDUYmiBjKuaOZQeqq1WzGQN-t2ds8WWLtXau1TOzChSP6PEormmWSYoK6yqdEkzKogOpxIZbJ8FTFBbgpsQddlsE5FJEcDAZQB3zY0XI1vR44OrLmeRPEvGSOsXs1024-rj.png?ex=690257bf&is=6901063f&hm=6c650c0032c765c10104b02fef5669331ae1cbd1629c96e4b2de1bb5bde2d721&=&format=webp&quality=lossless&width=960&height=960",
         },
         {
           id: 4,
@@ -337,7 +333,7 @@ export default {
           badge: "Especial",
           badgeClass: "special",
           featured: true,
-          image: "https://lh3.googleusercontent.com/rd-gg-dl/ABS2GSk73uNI3n5pbM6-95zG17Ub9uFsG-LEcaDTEYsJXW_9nRrN5Kdp6KWMhW4CilKDS7fZ4qk1HLyzFWBdAx9yczkEYll0_LFv8Wrmw6A4RtZSnuio48u7_wSdIZw7M7hvOD7cBYy_Ri_PylzuczzBa6j6JJtA_AYBvCHBKdf_cV0dvqjQ4g37wIsb8fcVz5oyscOAsRg979TzThgEqXJI65dKJkI3_JT3wj7IyQQnV0xmutpdqFPVll8sZqxBIQNx7vIiqLbbujCaLNtwtAD2gfokNL333OPUC2cI7Zcb24TeGzvL70kv-SLVGcrTKndplF5iZ14ZfjgzIJ1WF0bBF8nPERukUk-SYgNYUIUP05vE1YVlQnJRZWg6vRzJtqcTKuSHro5d6ZvufyL6LFfeGOsYEQDvnrS2ISh4q640qo4AmIqqYwQOZG32gYY9YClwVU2l59302TwbYzdO-Orx1tniTnVcD5OlK6b615fZyz7479MtZeFD5Yg0xBxdYSh3bsuv5lWSlTt9MtLyQdwj40PscW4guBJoiFJiW8yU8haeIgHwNw7AD7twEjdFKgeBUvg-nih2EU7M6NyupUD1v9O2uz8MDL3dO_puzNGgHK19_zRbQ_w5dN25VYzxw0OV6qyTEn8jw3hWJzxhPntB-IHlTHidMJDuaLpE_Ji22VUggd9gAbe5KTegMbewqYvywr7oyrUsQdDiGudO5kNwbQ-JTW4evcJS67MYmB4xjPqV75V8L8kAFwmgtvWBtKqLV5lWqd4UMbrSGsjHiYHO03TcBmyX2Ghc6rOvzkV2z3-8GlDScFhWVxFZXTCXsY-9JRB-W4ZYU_3Csz60dy3mUk8sC_vJk5XM0wZqoCzCKfsHd2DpEkpSzg2ACvLriVz5VPj0pVjEki7uvPR8Lfu5RTi0I3Twq2LRu_jb57E6sHh_HaPmXh-h5sJhKUOtKPH7jE6q74Uy_Hy9nps6Bpeh2GiaRVpXDRKw3ma_QMEI4AztkwLDO3U6SsDRLVKGvueEmWf4MpAH-IYLFftYxvJVHs9RLT4I4elIJYkt7uU5NDUzJB7T-NH8BdxVaB4frWovPUwKFf3w9yAip3fmn_kct8q6MKq49WTANLzPiAY7pvh7opDgVd6tiLrS7AjK0I0irMZXnFcGrzshiqFERu8egz0LUqhpryDHvwIkQ1qttYtqWUJFN2PS3i79MqQ_duc5vSAXSRJhhLgR5fUjJBx0CZvCSwuVeHudS4ap7Y2CbpeyjlANlYOiJT64vO342VbNhkWWAyHgwoM=s1024-rj",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t39.30808-6/488471077_2167629763668892_3586860406092687865_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=bDU4A5ajz3wQ7kNvwHK1Ri4&_nc_oc=AdnmLE5ctP4XW0pIHWIYub1xX_F50QZL25P31WcvekfP-MWfe1lCgMfYrDGNyvQ9w48&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=Ov6ZVJA5KrykhiIBH5fbEw&oh=00_AfdpbvhMh7vv3f_myjRz0iF0lKyoX-t-e8XSmlbyuPVvMw&oe=6906C6BF",
         },
         {
           id: 5,
@@ -391,7 +387,7 @@ export default {
           priceG: 7.75, // Doble Carne 12oz
           badge: "Clásica",
           badgeClass: "classic",
-          image: "https://via.placeholder.com/400x200?text=Classic+Burger",
+          image: "https://cdn.discordapp.com/attachments/1239974646321778789/1432784157947461713/image.png?ex=69024fbb&is=6900fe3b&hm=43ffcc61d0044da664f0da729b8dd84c749085522922a0bc9930125c070a93f5&",
         },
         {
           id: 402,
@@ -401,15 +397,15 @@ export default {
           priceG: 7.95,
           badge: "Picante 🌶️",
           badgeClass: "spicy",
-          image: "https://via.placeholder.com/400x200?text=Spicy+BBQ",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432784562811048117/image.png?ex=6902501b&is=6900fe9b&hm=dee7f1ee6651bc97b223dfdc0c7e4b956c96944b98fcbdd7d3b9cfdfc5dbdb2d&=&format=webp&quality=lossless",
         },
         {
           id: 403,
-          name: "Teriyaki Burger",
+          name: "baby back burger",
           desc: null,
           priceP: 5.50,
           priceG: 7.95,
-          image: "https://via.placeholder.com/400x200?text=Teriyaki+Burger",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t1.6435-9/31179569_456007334831152_8639776300195643392_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_ohc=gFgO41XbVi0Q7kNvwEW3vZk&_nc_oc=Adndan6we94QZbxiKaqiwDzyfL-l3yIHC1BHAKqvY3dcY0U_jhB7vsedCN3-b4iuQbQ&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=Crz9xcIreC0zvo2-v5tlWA&oh=00_Afe_6aqCyMUHZCEfaMC5MBgZqP3TNcCjjvwZMy1OrXDAWQ&oe=69286767",
         },
         {
           id: 404,
@@ -420,17 +416,17 @@ export default {
           badge: "Popular",
           badgeClass: "popular",
           featured: true,
-          image: "https://via.placeholder.com/400x200?text=Bacon+Burger",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432794626296778803/image.png?ex=6902597a&is=690107fa&hm=18699c3e84065cf2efe2021f7c952233d1639e4c52105bb5def972bea0018aa3&=&format=webp&quality=lossless",
         },
         {
           id: 405,
-          name: "Jalapeña Burger",
+          name: "La toscana Burger",
           desc: null,
           priceP: 5.75,
           priceG: 8.50,
           badge: "Picante 🌶️",
           badgeClass: "spicy",
-          image: "https://via.placeholder.com/400x200?text=Jalapeño+Burger",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432795010738290768/504491885_18353741224155021_1534566051973996343_n.png?ex=690259d6&is=69010856&hm=adb3a33874be3e988ee4e98195877f60167ede8eb2bbeadd9b4c1bb56782ef6a&=&format=webp&quality=lossless",
         },
         {
           id: 406,
@@ -438,7 +434,7 @@ export default {
           desc: null,
           priceP: 5.95,
           priceG: 8.95,
-          image: "https://via.placeholder.com/400x200?text=3+Quesos",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432782230303805492/content.png?ex=69024def&is=6900fc6f&hm=67741facad7c65c999885d86667dbe8662000de7c182d52499d864a9fe7861cf&=&format=webp&quality=lossless&width=960&height=960",
         },
         {
           id: 407,
@@ -452,39 +448,40 @@ export default {
           image: "https://libritasdemas.com/wp-content/uploads/2018/02/16-1.jpg",
         },
       ],
+
       bebidas: [
         {
           id: 101,
           name: "Sodas",
-          desc: "Cocacola, Fanta, Sprite, Colashampan, Uva, Fresa, Crema Soda",
+          desc: "Pepsi, Fanta, Sprite, Té lipton, Uva, Fresa, Salutaris.",
           price: 1.40,
           icon: "🥤",
-          image: "https://via.placeholder.com/100x100?text=Sodas",
+          image: "https://www.tipicosmargoth.com/wp-content/uploads/2020/05/LATA-CONJUNTO-TIPICOS-MARGOTH.jpg",
         },
         {
           id: 102,
-          name: "Te Helado Lipton 354 ml",
+          name: "Te Helado Lipton 2.5 L",
           desc: "Durazno - Limón",
           price: 1.60,
           icon: "🧊",
-          image: "https://via.placeholder.com/100x100?text=Lipton",
+          image: "https://walmartsv.vtexassets.com/arquivos/ids/449832-800-450?v=638513193762570000&width=800&height=450&aspect=true",
         },
         {
           id: 103,
-          name: "Agua",
+          name: "Agua Las perlitas",
           desc: null,
           price: 1.25,
           icon: "💧",
-          image: "https://via.placeholder.com/100x100?text=Agua",
+          image: "https://media.discordapp.net/attachments/1239974646321778789/1432805791794073730/image.png?ex=690263e1&is=69011261&hm=0333c4bf0f94189d14c3be8ef0695c2661b66fb07b580c05fc48d13708223b1d&=&format=webp&quality=lossless",
         },
         {
           id: 104,
-          name: "Soda de 1.5 Lts",
+          name: "Coca-cola de 1.5 Lts zero",
           desc: null,
           price: 3.95,
           icon: "🥤",
           featured: true,
-          image: "https://via.placeholder.com/100x100?text=Soda+1.5L",
+          image: "https://walmartsv.vtexassets.com/arquivos/ids/467392-1200-900?v=638548404703230000&width=1200&height=900&aspect=true",
         },
       ],
       shakes: [
@@ -494,7 +491,7 @@ export default {
           desc: null,
           price: 2.95,
           icon: "🍫",
-          image: "https://via.placeholder.com/150x150?text=Nutella+Shake",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t39.30808-6/491735405_2180425429055992_6898086868402908026_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=2s80v9sQxAUQ7kNvwHG5XuQ&_nc_oc=AdkScN98TIMRBxN_FliK5rg3ATDNR3fRP2Xvu2Fv8Yiltq38A9t7bzDI8taFOfsDA7U&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=x4bueHMT4nRXPMsFy_YyVw&oh=00_AfcLE1PiBg_A2N9MV65PcZQqOtBm-ACC24e8ekMC9E5Ttw&oe=6906EBF8",
         },
         {
           id: 202,
@@ -505,7 +502,7 @@ export default {
           badge: "Especial",
           badgeClass: "",
           premium: true,
-          image: "https://via.placeholder.com/150x150?text=Oreo+Shake",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t39.30808-6/491210663_2180424495722752_54449067436692796_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=UQRuEHapaxUQ7kNvwEXEpzo&_nc_oc=AdlfN0C6zawpvxNiYHwEXTkUEmYKI6Na0GFMQ50oX9c0bEBIO6gf1n94DUsrpMD9N8Q&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=df9WF4YKGH5gUMQMcsT4_g&oh=00_AfcZdxJ-R00n1rttw9366DDKlERSVufAjSIDgOOf85M8Rg&oe=6906E50B",
         },
         {
           id: 203,
@@ -513,18 +510,18 @@ export default {
           desc: null,
           price: 2.95,
           icon: "🍓",
-          image: "https://via.placeholder.com/150x150?text=Fresa+Shake",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ__Q8JrcApPr49NE8IXbWYPB30GHKGI5po4g&s",
         },
         {
           id: 204,
-          name: "Tropical Passion",
-          desc: "Vainilla, Maracuya",
+          name: "Empanaditas de Nutella",
+          desc: "Vainilla,",
           price: 3.50,
           icon: "🥭",
-          badge: "Tropical",
-          badgeClass: "tropical",
+          badge: "Nuevo",
+          badgeClass: "Nuevo",
           tropical: true,
-          image: "https://via.placeholder.com/150x150?text=Tropical",
+          image: "https://libritasdemas.com/wp-content/uploads/2018/02/18.jpg",
         },
         // ... Agrega el resto de tus shakes ...
       ],
@@ -532,18 +529,18 @@ export default {
         {
           id: 301,
           name: "Mega Hot-Dog",
-          desc: null,
+          desc: "🌭Mega Hot Dog!🌭 Deliciosa salchicha ahumada en pan brochado con ajo y acompañado siempre de papas fritas con nuestra sazón secreta. ¡Delicioso!",
           price: 2.75,
           icon: "🌭",
-          image: "https://via.placeholder.com/100x100?text=HotDog",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t39.30808-6/490914440_2180414965723705_8905732735972525129_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=1jtbQkOXoVAQ7kNvwFzV1xb&_nc_oc=AdlgYu0n5Q7Ag91n5hoY9YYAoHBldhXOpAxvpg4f5VPQbqqBn6IYR6_FdT9DI_AH12Y&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=KVEjGgexEsSkLXVGJ6uVOg&oh=00_Afc7-Oaje_58VPStCBSRRG9Bv0tBHC2ObrVkJXN92s_lxQ&oe=6906F6D5",
         },
         {
           id: 302,
           name: "Tex Mex Dog",
-          desc: "(Salsa de queso Cheddar y jalapeños)",
+          desc: "(El Tex Mex Dog: Hot Dog con salchicha de primera calidad con salsa cheddar y jalapeños. Está 👌🏼)",
           price: 3.25,
           icon: "🌶️",
-          image: "https://via.placeholder.com/100x100?text=Tex+Mex",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t39.30808-6/489567852_2173076566457545_4394499166309957442_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=IdZH9JUXibYQ7kNvwGMw5OQ&_nc_oc=Adn-6G_WMntWRjMUATC0Tmj4GT-6gk25cMHezO-HQgkpuvahNj8zdYCmsnxo0t7tixQ&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=4RcRr66goEzKzuaZyrlDZA&oh=00_AfcHhWvx_3O9dJHSRUOSolpwjvXU1XG001bbmJj_o9woYA&oe=6906FF26",
         },
         {
           id: 303,
@@ -551,7 +548,7 @@ export default {
           desc: "(Con nuestra deliciosa salsa blanca con tocino)",
           price: 3.50,
           icon: "🥓",
-          image: "https://via.placeholder.com/100x100?text=Bacon+Dog",
+          image: "https://scontent.fsal14-1.fna.fbcdn.net/v/t1.6435-9/123310297_1075730479525498_4597732350973440266_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=111&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=wcWSlnRkrFoQ7kNvwEU70LV&_nc_oc=AdnhrOxKy1kw7Tjf2J8_CNq1_dnTBGRqaDzHcodhffogn9SrUiIi6uFjxUAO1IPhxGI&_nc_zt=23&_nc_ht=scontent.fsal14-1.fna&_nc_gid=GoqYNWOropoBmpZEfv0DPg&oh=00_AffZIhCTjEIxX--awrxSqrNa0wA67MmSAlYte8ZIYOq33Q&oe=6928A854",
         },
         // ... Agrega el resto de tus hotdogs ...
       ],
@@ -1621,27 +1618,27 @@ export default {
   flex: 1; /* Empuja los precios y botones hacia abajo */
 }
 
-/* Para las listas de BEBIDAS y HOT DOGS */
 .drink-icon-img,
 .hotdog-icon-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
   object-fit: cover;
   flex-shrink: 0;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Para las tarjetas de SHAKES */
-.shake-header img.shake-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%; /* Círculo perfecto */
+/* Para las tarjetas de SHAKES */
+.shake-header img.drink-card-image {
+    width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
   object-fit: cover;
-  margin: 0 auto 15px; /* Centrado y con espacio abajo */
+  margin: 0 auto 15px;
   display: block;
   filter: drop-shadow(0 4px 10px rgba(255, 184, 107, 0.3));
-  animation: float 3s ease-in-out infinite; /* Reutilizamos tu animación! */
+  animation: float 3s ease-in-out infinite;
 }
 
 /* ============================================
