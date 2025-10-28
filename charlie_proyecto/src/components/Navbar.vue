@@ -4,7 +4,6 @@
       <ul>
         <li><router-link to="/">Inicio</router-link></li>
         <li><router-link to="/menu">Menú</router-link></li>
-        <li><router-link to="/delivery">Delivery</router-link></li>
         <li><router-link to="/about">Sobre Nosotros</router-link></li>
         <li><router-link to="/contact">Ubicación & Contacto</router-link></li>
         <li><router-link to="/promotions">Promociones</router-link></li>
